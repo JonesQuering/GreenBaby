@@ -1,0 +1,117 @@
+﻿@using Microsoft.AspNet.Identity;
+@model HG100.Models.Plant
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-5">
+            <div class="image">
+                <img src="~/images/@(Model.Imagefilename)" />
+            </div>
+
+        </div>
+        <div class="col-md-7">
+            <h1 class="text-center"><b>@(Model.PlantName)</b></h1>
+            <p><b>ZONE: </b> @(Model.Zone)</p>
+            <p><b>SHADE:</b> @(Model.Shade)</p>
+            <p><b>BLOOM:</b> @(Model.Bloom)</p>
+
+            <p><b>DESCRIPTION:</b> @(Model.Description)</p>
+            @if (Model.AddedtoGarden(User.Identity.GetUserId()))
+            {
+                <a href="#" class="btn react">AlREADY ADDED TO GARDEN</a>
+            }
+            else
+            {
+                <a href="javascript:$('@("#SelectedForm" + Model.Id)').submit()" class="btn react"><span class="glyphicon-plus-sign"></span>ADD TO GARDEN</a>
+            }
+            @using (Html.BeginForm("SelectPlant", "Plants", new { id = Model.Id }, FormMethod.Post, new { style = "display: none", id = "SelectedForm" + Model.Id })) { }
+
+
+
+
+            @if (Model.isFavorite(User.Identity.GetUserId()))
+            {
+                <a href="#" class="btn react">Already a favorite!</a>
+            }
+            else
+            {
+                <a href="javascript:$('@("#FavoriteForm" + Model.Id)').submit()" class="btn react"><span class="glyphicon-heart"></span> FAVORITE</a>
+            }
+            @using (Html.BeginForm("Favorite", "Plants", new { id = Model.Id }, FormMethod.Post, new { style = "display: none", id = "FavoriteForm" + Model.Id })) { }
+
+
+        </div>
+
+    </div>
+</div>
+
+@*<div>
+
+        <hr />
+        <dl class="dl-horizontal">
+            <dt>
+                @Html.DisplayNameFor(model => model.Type)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Type)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Shade)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Shade)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Bloom)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Bloom)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Zone)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Zone)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Color)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Color)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Description)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Description)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.PlantName)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.PlantName)
+            </dd>
+
+        </dl>
+    </div>
+    <p>
+        @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+        @Html.ActionLink("Back to List", "Index")
+    </p>*@

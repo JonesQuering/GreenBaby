@@ -1,0 +1,188 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl" Namespace="PlantDataModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2005">
+        <EntityContainer Name="PlantDataModelTargetContainer" >
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema xmlns="http://schemas.microsoft.com/ado/2009/11/edm" xmlns:cg="http://schemas.microsoft.com/ado/2006/04/codegeneration" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" Namespace="PlantDataModel" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" annotation:UseStrongSpatialTypes="false">
+        <EntityContainer Name="PlantDataModelContainer" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Plants" EntityType="PlantDataModel.Plants" />
+          <EntitySet Name="Users" EntityType="PlantDataModel.User" />
+          <AssociationSet Name="UserPlants" Association="PlantDataModel.UserPlants">
+            <End Role="User" EntitySet="Users" />
+            <End Role="Plants" EntitySet="Plants" />
+          </AssociationSet>
+          <EntitySet Name="FavortePlants" EntityType="PlantDataModel.FavortePlants" />
+          <AssociationSet Name="FavortePlantsUser" Association="PlantDataModel.FavortePlantsUser">
+            <End Role="FavortePlants" EntitySet="FavortePlants" />
+            <End Role="User" EntitySet="Users" />
+          </AssociationSet>
+          <AssociationSet Name="PlantsFavortePlants" Association="PlantDataModel.PlantsFavortePlants">
+            <End Role="Plants" EntitySet="Plants" />
+            <End Role="FavortePlants" EntitySet="FavortePlants" />
+          </AssociationSet>
+          <AssociationSet Name="FavortePlantsUser1" Association="PlantDataModel.FavortePlantsUser1">
+            <End Role="FavortePlants" EntitySet="FavortePlants" />
+            <End Role="User" EntitySet="Users" />
+          </AssociationSet>
+          <EntitySet Name="UserProfiles" EntityType="PlantDataModel.UserProfile" />
+          <AssociationSet Name="UserUserProfile" Association="PlantDataModel.UserUserProfile">
+            <End Role="User" EntitySet="Users" />
+            <End Role="UserProfile" EntitySet="UserProfiles" />
+          </AssociationSet>
+          <AssociationSet Name="UserProfileFavortePlants" Association="PlantDataModel.UserProfileFavortePlants">
+            <End Role="UserProfile" EntitySet="UserProfiles" />
+            <End Role="FavortePlants" EntitySet="FavortePlants" />
+          </AssociationSet>
+          <EntitySet Name="PlantCarts" EntityType="PlantDataModel.PlantCart" />
+          <AssociationSet Name="PlantCartPlants" Association="PlantDataModel.PlantCartPlants">
+            <End Role="PlantCart" EntitySet="PlantCarts" />
+            <End Role="Plants" EntitySet="Plants" />
+          </AssociationSet>
+          <AssociationSet Name="UserProfilePlantCart" Association="PlantDataModel.UserProfilePlantCart">
+            <End Role="UserProfile" EntitySet="UserProfiles" />
+            <End Role="PlantCart" EntitySet="PlantCarts" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="Plants">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Type" Type="String" Nullable="false" />
+          <Property Name="Shade" Type="String" Nullable="false" />
+          <Property Name="Bloom" Type="String" Nullable="false" />
+          <Property Name="Zone" Type="String" Nullable="false" />
+          <Property Name="Color" Type="String" Nullable="false" />
+          <Property Name="Description" Type="String" Nullable="false" />
+          <NavigationProperty Name="User" Relationship="PlantDataModel.UserPlants" FromRole="Plants" ToRole="User" />
+          <Property Name="UserId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="FavortePlant" Relationship="PlantDataModel.PlantsFavortePlants" FromRole="Plants" ToRole="FavortePlants" />
+          <NavigationProperty Name="PlantCart" Relationship="PlantDataModel.PlantCartPlants" FromRole="Plants" ToRole="PlantCart" />
+          <Property Name="PlantCartId" Type="Int32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="FirstName" Type="String" Nullable="false" />
+          <Property Name="LastName" Type="String" Nullable="false" />
+          <Property Name="Email" Type="String" Nullable="false" />
+          <NavigationProperty Name="Plants" Relationship="PlantDataModel.UserPlants" FromRole="User" ToRole="Plants" />
+          <NavigationProperty Name="FavortePlants1" Relationship="PlantDataModel.FavortePlantsUser1" FromRole="User" ToRole="FavortePlants" />
+          <NavigationProperty Name="UserProfile" Relationship="PlantDataModel.UserUserProfile" FromRole="User" ToRole="UserProfile" />
+        </EntityType>
+        <Association Name="UserPlants">
+          <End Type="PlantDataModel.User" Role="User" Multiplicity="1" />
+          <End Type="PlantDataModel.Plants" Role="Plants" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Plants">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="FavortePlants" >
+          <NavigationProperty Name="Plants" Relationship="PlantDataModel.PlantsFavortePlants" FromRole="FavortePlants" ToRole="Plants" />
+          <NavigationProperty Name="User" Relationship="PlantDataModel.FavortePlantsUser1" FromRole="FavortePlants" ToRole="User" />
+          <Property Name="UserId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="UserProfile" Relationship="PlantDataModel.UserProfileFavortePlants" FromRole="FavortePlants" ToRole="UserProfile" />
+        </EntityType>
+        <Association Name="FavortePlantsUser">
+          <End Type="PlantDataModel.FavortePlants" Role="FavortePlants" Multiplicity="*" />
+          <End Type="PlantDataModel.User" Role="User" Multiplicity="1" />
+        </Association>
+        <Association Name="PlantsFavortePlants">
+          <End Type="PlantDataModel.Plants" Role="Plants" Multiplicity="*" />
+          <End Type="PlantDataModel.FavortePlants" Role="FavortePlants" Multiplicity="1" />
+        </Association>
+        <Association Name="FavortePlantsUser1">
+          <End Type="PlantDataModel.FavortePlants" Role="FavortePlants" Multiplicity="*" />
+          <End Type="PlantDataModel.User" Role="User" Multiplicity="1" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="FavortePlants">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="UserProfile" >
+          <NavigationProperty Name="User" Relationship="PlantDataModel.UserUserProfile" FromRole="UserProfile" ToRole="User" />
+          <NavigationProperty Name="FavortePlants" Relationship="PlantDataModel.UserProfileFavortePlants" FromRole="UserProfile" ToRole="FavortePlants" />
+          <NavigationProperty Name="PlantCart" Relationship="PlantDataModel.UserProfilePlantCart" FromRole="UserProfile" ToRole="PlantCart" />
+        </EntityType>
+        <Association Name="UserUserProfile">
+          <End Type="PlantDataModel.User" Role="User" Multiplicity="1" />
+          <End Type="PlantDataModel.UserProfile" Role="UserProfile" Multiplicity="1" />
+        </Association>
+        <Association Name="UserProfileFavortePlants">
+          <End Type="PlantDataModel.UserProfile" Role="UserProfile" Multiplicity="1" />
+          <End Type="PlantDataModel.FavortePlants" Role="FavortePlants" Multiplicity="*" />
+        </Association>
+        <EntityType Name="PlantCart">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <NavigationProperty Name="Plants" Relationship="PlantDataModel.PlantCartPlants" FromRole="PlantCart" ToRole="Plants" />
+          <NavigationProperty Name="UserProfile" Relationship="PlantDataModel.UserProfilePlantCart" FromRole="PlantCart" ToRole="UserProfile" />
+        </EntityType>
+        <Association Name="PlantCartPlants">
+          <End Type="PlantDataModel.PlantCart" Role="PlantCart" Multiplicity="1" />
+          <End Type="PlantDataModel.Plants" Role="Plants" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PlantCart">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Plants">
+              <PropertyRef Name="PlantCartId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="UserProfilePlantCart">
+          <End Type="PlantDataModel.UserProfile" Role="UserProfile" Multiplicity="1" />
+          <End Type="PlantDataModel.PlantCart" Role="PlantCart" Multiplicity="1" />
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs" Space="C-S">
+        <Alias Key="Model" Value="PlantDataModel" />
+        <Alias Key="Target" Value="PlantDataModel.Store" />
+        <EntityContainerMapping CdmEntityContainer="PlantDataModelContainer" StorageEntityContainer="PlantDataModelTargetContainer">
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <edmx:Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </edmx:Connection>
+    <edmx:Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="True" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </edmx:Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

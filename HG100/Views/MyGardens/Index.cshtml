@@ -1,0 +1,15 @@
+﻿@model HG100.Models.MyGarden
+
+@{
+    ViewBag.Title = "Index";
+}
+
+    <div>
+        <h1 class="display-4 text-center">YOUR GARDEN</h1>
+        @Html.Action("PartialGardenPlants", new { id = Model.Id, plantselected = "selected" })
+    </div>
+    <div>
+        <h1 class="display-4 text-center">YOUR FAVORITES</h1>
+        @Html.Action("PartialGardenPlants", new { id = Model.Id, plantselected = "favorite" })
+    </div> 
+

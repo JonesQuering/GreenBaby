@@ -1,0 +1,74 @@
+﻿@using Microsoft.AspNet.Identity;
+@model IEnumerable<HG100.Models.Plant>
+
+@{
+    ViewBag.Title = "Shop";
+}
+
+
+
+
+
+
+
+
+
+
+    <div class="container">
+        <h1 class="display-4 text-center">FIND YOUR GARDEN</h1>
+        @Html.Action("_PlantFilterPartial", "Plants")
+        <div class="ShopGrid">
+
+            @foreach (var item in Model)
+            {
+
+
+                <div class="col-md-4 product-grid">
+                    <div class="image">
+                        <div class="plantcard" style="background-image:url('/images/@HttpUtility.UrlPathEncode(item.Imagefilename)')" onclick="location.href='@Url.Action("details", new {id= item.Id})'">
+
+                            <div class="overlay">
+                                <div class="detail">View Details</div>
+                            </div>
+                        </div>
+                        <h4 class="text-center">@item.PlantName</h4>
+
+                        @if (item.AddedtoGarden(User.Identity.GetUserId()))
+                        {
+                            <a href="#" class="btn react"><span class="glyphicon glyphicon-plus-sign"></span> AlREADY ADDED TO GARDEN</a>
+                        }
+                        else
+                        {
+                            <a href="javascript:$('@("#SelectedForm" + item.Id)').submit()" class="btn react"><span class="glyphicon glyphicon-plus-sign"></span>ADD TO GARDEN</a>
+                        }
+                        @using (Html.BeginForm("SelectPlant", "Plants", new { id = item.Id }, FormMethod.Post, new { style = "display: none", id = "SelectedForm" + item.Id })) { }
+
+
+
+
+                        @if (item.isFavorite(User.Identity.GetUserId()))
+                        {
+                            <a href="#" class="btn react"><span class="glyphicon glyphicon-heart"></span> Already a favorite!</a>
+                        }
+                        else
+                        {
+                            <a href="javascript:$('@("#FavoriteForm" + item.Id)').submit()" class="btn react"><span class="glyphicon glyphicon-heart"></span> FAVORITE</a>
+                        }
+                        @using (Html.BeginForm("Favorite", "Plants", new { id = item.Id }, FormMethod.Post, new { style = "display: none", id = "FavoriteForm" + item.Id })) { }
+
+
+
+                    </div>
+                </div>
+
+            }
+
+
+
+
+
+
+        </div>
+    </div>
+
+

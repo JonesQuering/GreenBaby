@@ -1,0 +1,46 @@
+﻿@using Microsoft.AspNet.Identity;
+@model IEnumerable<HG100.Models.Plant>
+
+@{
+    ViewBag.Title = "Shop";
+}
+
+
+<div class="container">
+
+    <div class="ShopGrid">
+        @foreach (var item in Model)
+        {
+
+            <div class="col-md-4 product-grid">
+                <div class="image">
+                    <div class="plantcard" style="background-image:url('/images/@HttpUtility.UrlPathEncode(item.Imagefilename)')" onclick="location.href='@Url.Action("details", "Plants", new {id= item.Id})'">
+
+                        <div class="overlay">
+                            <div class="detail">View Details</div>
+                        </div>
+                    </div>
+                    <h4 class="text-center">@item.PlantName</h4>
+
+                    @using (Html.BeginForm("SelectPlant", "Plants", new { id = item.Id }, FormMethod.Post, new { style = "display: none", id = "SelectedForm" + item.Id })) { }
+
+
+                    @using (Html.BeginForm("Favorite", "Plants", new { id = item.Id }, FormMethod.Post, new { style = "display: none", id = "FavoriteForm" + item.Id })) { }
+
+                    @if (ViewBag.PlantSelected == "selected")
+                    {
+                        <a href="javascript:$('@("#RemovePlantForm" + item.Id)').submit()" class="btn react">REMOVE</a>
+                    }
+                    @using (Html.BeginForm("RemovePlant", "MyGardens", new { id = item.Id }, FormMethod.Post, new { style = "display: none", id = "RemovePlantForm" + item.Id })) { }
+                </div>
+            </div>
+
+        }
+    </div>
+
+
+</div>
+
+
+
+

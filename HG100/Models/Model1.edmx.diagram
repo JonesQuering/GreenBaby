@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="4dda58b635a242a9a5dbf9e868e7eaef" Name="Diagram1">
+        <EntityTypeShape EntityType="HomeGrowingModel.MyGarden" Width="1.5" PointX="3.25" PointY="1" />
+        <EntityTypeShape EntityType="HomeGrowingModel.Plant" Width="1.5" PointX="0.625" PointY="0.625" />
+        <AssociationConnector Association="HomeGrowingModel.FavortiePlant" />
+        <AssociationConnector Association="HomeGrowingModel.UserPlants" />
+        </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

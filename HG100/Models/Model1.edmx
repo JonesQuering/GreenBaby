@@ -1,0 +1,238 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="HomeGrowingModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="FavortiePlant">
+          <Key>
+            <PropertyRef Name="MyGardenId" />
+            <PropertyRef Name="PlantsId" />
+          </Key>
+          <Property Name="MyGardenId" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="PlantsId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="MyGarden">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="FirstName" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="LastName" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="EmailAddress" Type="nvarchar" MaxLength="256" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Plants">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Type" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Shade" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Bloom" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Zone" Type="int" Nullable="false" />
+          <Property Name="Color" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Description" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="PlantName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Imagefilename" Type="nvarchar" MaxLength="500" />
+        </EntityType>
+        <EntityType Name="UserPlants">
+          <Key>
+            <PropertyRef Name="PlantId" />
+            <PropertyRef Name="UserId" />
+          </Key>
+          <Property Name="PlantId" Type="int" Nullable="false" />
+          <Property Name="UserId" Type="nvarchar" MaxLength="128" Nullable="false" />
+        </EntityType>
+        <Association Name="FK__FavortieP__MyGar__29572725">
+          <End Role="MyGarden" Type="Self.MyGarden" Multiplicity="1" />
+          <End Role="FavortiePlant" Type="Self.FavortiePlant" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MyGarden">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="FavortiePlant">
+              <PropertyRef Name="MyGardenId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__FavortieP__Plant__2A4B4B5E">
+          <End Role="Plants" Type="Self.Plants" Multiplicity="1" />
+          <End Role="FavortiePlant" Type="Self.FavortiePlant" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Plants">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="FavortiePlant">
+              <PropertyRef Name="PlantsId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__UserPlant__Plant__3C69FB99">
+          <End Role="Plants" Type="Self.Plants" Multiplicity="1" />
+          <End Role="UserPlants" Type="Self.UserPlants" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Plants">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="UserPlants">
+              <PropertyRef Name="PlantId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__UserPlant__UserI__3D5E1FD2">
+          <End Role="MyGarden" Type="Self.MyGarden" Multiplicity="1" />
+          <End Role="UserPlants" Type="Self.UserPlants" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MyGarden">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="UserPlants">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="HomeGrowingModelStoreContainer">
+          <EntitySet Name="FavortiePlant" EntityType="Self.FavortiePlant" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="MyGarden" EntityType="Self.MyGarden" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Plants" EntityType="Self.Plants" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="UserPlants" EntityType="Self.UserPlants" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__FavortieP__MyGar__29572725" Association="Self.FK__FavortieP__MyGar__29572725">
+            <End Role="MyGarden" EntitySet="MyGarden" />
+            <End Role="FavortiePlant" EntitySet="FavortiePlant" />
+          </AssociationSet>
+          <AssociationSet Name="FK__FavortieP__Plant__2A4B4B5E" Association="Self.FK__FavortieP__Plant__2A4B4B5E">
+            <End Role="Plants" EntitySet="Plants" />
+            <End Role="FavortiePlant" EntitySet="FavortiePlant" />
+          </AssociationSet>
+          <AssociationSet Name="FK__UserPlant__Plant__3C69FB99" Association="Self.FK__UserPlant__Plant__3C69FB99">
+            <End Role="Plants" EntitySet="Plants" />
+            <End Role="UserPlants" EntitySet="UserPlants" />
+          </AssociationSet>
+          <AssociationSet Name="FK__UserPlant__UserI__3D5E1FD2" Association="Self.FK__UserPlant__UserI__3D5E1FD2">
+            <End Role="MyGarden" EntitySet="MyGarden" />
+            <End Role="UserPlants" EntitySet="UserPlants" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="HomeGrowingModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="HomeGrowingEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="MyGardens" EntityType="HomeGrowingModel.MyGarden" />
+          <EntitySet Name="Plants" EntityType="HomeGrowingModel.Plant" />
+          <AssociationSet Name="FavortiePlant" Association="HomeGrowingModel.FavortiePlant">
+            <End Role="MyGarden" EntitySet="MyGardens" />
+            <End Role="Plant" EntitySet="Plants" />
+          </AssociationSet>
+          <AssociationSet Name="UserPlants" Association="HomeGrowingModel.UserPlants">
+            <End Role="Plant" EntitySet="Plants" />
+            <End Role="MyGarden" EntitySet="MyGardens" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="MyGarden">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="FirstName" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="LastName" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="EmailAddress" Type="String" Nullable="false" MaxLength="256" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="FavortiePlants" Relationship="HomeGrowingModel.FavortiePlant" FromRole="MyGarden" ToRole="Plant" />
+          <NavigationProperty Name="SelectedPlants" Relationship="HomeGrowingModel.UserPlants" FromRole="MyGarden" ToRole="Plant" />
+        </EntityType>
+        <EntityType Name="Plant">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Type" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Shade" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Bloom" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Zone" Type="Int32" Nullable="false" />
+          <Property Name="Color" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Description" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="PlantName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Imagefilename" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="UserFavorited" Relationship="HomeGrowingModel.FavortiePlant" FromRole="Plant" ToRole="MyGarden" />
+          <NavigationProperty Name="UserSelected" Relationship="HomeGrowingModel.UserPlants" FromRole="Plant" ToRole="MyGarden" />
+        </EntityType>
+        <Association Name="FavortiePlant">
+          <End Type="HomeGrowingModel.MyGarden" Role="MyGarden" Multiplicity="*" />
+          <End Type="HomeGrowingModel.Plant" Role="Plant" Multiplicity="*" />
+        </Association>
+        <Association Name="UserPlants">
+          <End Type="HomeGrowingModel.Plant" Role="Plant" Multiplicity="*" />
+          <End Type="HomeGrowingModel.MyGarden" Role="MyGarden" Multiplicity="*" />
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="HomeGrowingModelStoreContainer" CdmEntityContainer="HomeGrowingEntities">
+          <EntitySetMapping Name="MyGardens">
+            <EntityTypeMapping TypeName="HomeGrowingModel.MyGarden">
+              <MappingFragment StoreEntitySet="MyGarden">
+                <ScalarProperty Name="EmailAddress" ColumnName="EmailAddress" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Plants">
+            <EntityTypeMapping TypeName="HomeGrowingModel.Plant">
+              <MappingFragment StoreEntitySet="Plants">
+                <ScalarProperty Name="Imagefilename" ColumnName="Imagefilename" />
+                <ScalarProperty Name="PlantName" ColumnName="PlantName" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Color" ColumnName="Color" />
+                <ScalarProperty Name="Zone" ColumnName="Zone" />
+                <ScalarProperty Name="Bloom" ColumnName="Bloom" />
+                <ScalarProperty Name="Shade" ColumnName="Shade" />
+                <ScalarProperty Name="Type" ColumnName="Type" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <AssociationSetMapping Name="FavortiePlant" TypeName="HomeGrowingModel.FavortiePlant" StoreEntitySet="FavortiePlant">
+            <EndProperty Name="Plant">
+              <ScalarProperty Name="Id" ColumnName="PlantsId" />
+            </EndProperty>
+            <EndProperty Name="MyGarden">
+              <ScalarProperty Name="Id" ColumnName="MyGardenId" />
+            </EndProperty>
+          </AssociationSetMapping>
+          <AssociationSetMapping Name="UserPlants" TypeName="HomeGrowingModel.UserPlants" StoreEntitySet="UserPlants">
+            <EndProperty Name="MyGarden">
+              <ScalarProperty Name="Id" ColumnName="UserId" />
+            </EndProperty>
+            <EndProperty Name="Plant">
+              <ScalarProperty Name="Id" ColumnName="PlantId" />
+            </EndProperty>
+          </AssociationSetMapping>
+          </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
